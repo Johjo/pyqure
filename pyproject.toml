@@ -12,8 +12,13 @@ dependencies = [
 ]
 
 [tool.poetry]
+name = "pyqure"
+version = "0.1.0"
 packages = [{include = "pyqure", from = "src"}]
-
+description = ""
+authors = [
+    "Jonathan Laurent <contact@ytreza.dev>"
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
