@@ -2,24 +2,30 @@
 name = "pyqure"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Jonathan",email = "johjo@ytreza.org"}
-]
+authors = [{ name = "Jonathan", email = "johjo@ytreza.org" }]
+requires-python = ">=3.10"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "pytest (>=8.3.5,<9.0.0)"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
+dependencies = []
 
-[tool.poetry]
-name = "pyqure"
-version = "0.1.0"
-packages = [{include = "pyqure", from = "src"}]
-description = ""
-authors = [
-    "Jonathan Laurent <contact@ytreza.dev>"
-]
+[tool.hatch.build.targets.sdist]
+include = ["src/pyqure"]
+
+[tool.hatch.build.targets.wheel]
+include = ["src/pyqure"]
+
+[tool.hatch.build.targets.wheel.sources]
+"src/pyqure" = "pyqure"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+]
