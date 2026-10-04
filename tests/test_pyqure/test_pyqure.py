@@ -32,7 +32,7 @@ class AConcreteClass(AnAbstractClass):
     [Key("string key", int), 42],
     [Key("string key", SomeClass), SomeClass()],
     [Key("string key", SomeClass), SomeSubClass()],
-    [Key("string key", AnAbstractClass), AConcreteClass()],
+    [Key("string key", AnAbstractClass), AConcreteClass()],  # type: ignore[type-abstract] # noqa: E501 — la classe abstraite sert uniquement de clé, pyqure ne l'instancie jamais
 ])
 def test_provide_dependency_for_key(key: Key[Any], expected: Any) -> None:
     memory : PyqureMemory = {}
@@ -53,7 +53,8 @@ def test_tell_error_when_key_not_found() -> None:
 @pytest.mark.parametrize("title,key,injected", [
     ["standard type", Key("string key", int), "Injected"],
     ["subtype type", Key("string key", SomeClass), AnotherClass()],
-    ["abstract type", Key("string key", AnAbstractClass), AnotherClass()],
+    # la classe abstraite sert uniquement de clé, pyqure ne l'instancie jamais
+    ["abstract type", Key("string key", AnAbstractClass), AnotherClass()],  # type: ignore[type-abstract]
 ])
 def test_tell_error_when_type_not_match(title: str, key: Key[Any], injected: Any) -> None:
     (provide, _) = pyqure({})

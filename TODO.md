@@ -4,22 +4,17 @@ Une carte = un commit. Limite WIP : 1 à 2 cartes en cours.
 
 ## En cours
 
-### Nettoyer le dépôt
+### Protocole typé pour `provide` / `inject`
 
-- [ ] Supprimer `README_sample.md` (contenu fusionné dans le README)
-- [x] `.idea/` : déjà ignoré, non tracké — rien à faire
+- [x] Remplacer `Callable[[Key[Any]], Any]` par des `Protocol` génériques
+- [x] Typage préservé de bout en bout côté appelant
+- [x] `mypy strict` passe avec les nouveaux types
 
 ## Backlog
 
 Par ordre de priorité — la première carte est la prochaine à faire.
 
-### 1. Protocole typé pour `provide` / `inject`
-
-- [ ] Remplacer `Callable[[Key[Any]], Any]` par des `Protocol` génériques
-- [ ] Typage préservé de bout en bout côté appelant
-- [ ] `mypy strict` passe avec les nouveaux types
-
-### 2. Fournisseurs paresseux (factory)
+### 1. Fournisseurs paresseux (factory)
 
 - [ ] `provide_factory(key, factory)` : la valeur n'est créée qu'à l'`inject`
 - [ ] Tests : appel unique, mise en cache éventuelle
@@ -30,3 +25,4 @@ Par ordre de priorité — la première carte est la prochaine à faire.
 - Écrire le README (`19be81f`, PR #2)
 - Corriger les métadonnées de `pyproject.toml` (`552635c`, PR #3)
 - Ajouter mypy aux dev dependencies (`c5cbf13`, PR #4)
+- Nettoyer le dépôt (`c84ec7e`, PR #5)

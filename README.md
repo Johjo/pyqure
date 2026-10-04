@@ -8,6 +8,7 @@ Most DI containers wire dependencies by name or by type hints. pyqure keeps it s
 
 - **Typed keys** — `Key("db_host", str)` and `Key("db_host", int)` are two different dependencies
 - **Runtime type safety** — providing a value of the wrong type raises `TypeError`
+- **Static type safety** — `provide` and `inject` are generic protocols: mypy rejects type mismatches at the call site
 - **Zero dependencies** — pure standard library
 - **Fully typed** — `py.typed` marker, checked with mypy in strict mode
 
