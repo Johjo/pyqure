@@ -5,14 +5,29 @@ from pathlib import Path
 from pyqure import Key, Provide, Inject, pyqure
 
 TYPING_PROOF = '''\
+from abc import ABC, abstractmethod
+
 from pyqure import Key, pyqure
 
+
+class Abstract(ABC):
+    @abstractmethod
+    def m(self) -> None: ...
+
+
+class Concrete(Abstract):
+    def m(self) -> None: ...
+
+
 provide, inject = pyqure({})
-reveal_type(inject(Key("host", str)))
-provide(Key("host", str), "localhost")
-provide(Key("port", int), 5432)
-provide(Key("host", str), 5432)
-inject(Key("port", int)) + "text"
+reveal_type(inject(Key[str]("host", str)))
+provide(Key[str]("host", str), "localhost")
+provide(Key[int]("port", int), 5432)
+provide(Key[str]("host", str), 5432)
+inject(Key[int]("port", int)) + "text"
+reveal_type(inject(Key[Abstract]("db", Abstract)))
+provide(Key[Abstract]("db", Abstract), Concrete())
+provide(Key("bare", str), "no subscript, no static typing, no error")
 '''
 
 
@@ -37,13 +52,17 @@ def test_call_site_typing_is_preserved(tmp_path: Path) -> None:
 
     assert result.returncode != 0, "mypy should report the two type errors"
 
-    assert (
-        f'{proof}:7: error: Cannot infer value of type parameter "T" of "__call__" of "Provide"  [misc]'
-        in result.stdout
-    )
-    assert (
-        f'{proof}:8: error: Unsupported operand types for + ("int" and "str")'
-        in result.stdout
-    )
     assert 'Revealed type is "str"' in result.stdout
-    assert result.stdout.count("error:") == 2
+    assert (
+        f'{proof}:19: error: Cannot infer value of type parameter "T" of "__call__" of "Provide"  [misc]'
+        in result.stdout
+    )
+    assert (
+        f'{proof}:20: error: Unsupported operand types for + ("int" and "str")'
+        in result.stdout
+    )
+    assert 'Revealed type is "typing_proof.Abstract"' in result.stdout
+    assert result.stdout.count("error:") == 2, (
+        "the abstract-key pattern (lines 20-21) and bare keys (line 22) "
+        "must not produce static errors"
+    )

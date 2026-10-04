@@ -7,7 +7,8 @@ Une carte = un commit. Limite WIP : 1 à 2 cartes en cours.
 ### Protocole typé pour `provide` / `inject`
 
 - [x] Remplacer `Callable[[Key[Any]], Any]` par des `Protocol` génériques
-- [x] Typage préservé de bout en bout côté appelant
+- [x] Typage de bout en bout côté appelant via souscription `Key[T](...)`
+- [x] Pattern abstrait sans friction (pas de `# type: ignore`, pas de `type-abstract`)
 - [x] `mypy strict` passe avec les nouveaux types
 
 ## Backlog

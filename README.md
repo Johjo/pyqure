@@ -8,7 +8,7 @@ Most DI containers wire dependencies by name or by type hints. pyqure keeps it s
 
 - **Typed keys** — `Key("db_host", str)` and `Key("db_host", int)` are two different dependencies
 - **Runtime type safety** — providing a value of the wrong type raises `TypeError`
-- **Static type safety** — `provide` and `inject` are generic protocols: mypy rejects type mismatches at the call site
+- **Static type safety (opt-in)** — subscript a key (`Key[int]("port", int)`) and mypy checks every `provide`/`inject` call site
 - **Zero dependencies** — pure standard library
 - **Fully typed** — `py.typed` marker, checked with mypy in strict mode
 
@@ -32,6 +32,23 @@ port = inject(Key("db_port", int))  # 5432
 provide(Key("db_host", str), 5432)       # TypeError: expected str
 inject(Key("unknown", str))              # KeyError: no value provided
 ```
+
+### Static typing
+
+`provide` and `inject` are generic protocols. Subscript a key and the value type is checked statically at every call site:
+
+```python
+port = inject(Key[int]("db_port", int))      # mypy knows: int
+provide(Key[int]("db_port", int), "5432")    # mypy error
+```
+
+Abstract classes work as keys without tripping mypy's `type-abstract` check — a common DI pattern:
+
+```python
+provide(Key[AbstractConnection]("db", AbstractConnection), PostgresConnection())
+```
+
+Bare keys (`Key("db", AbstractConnection)`) are also fine: the type is then enforced at runtime only.
 
 ### Sharing a container
 

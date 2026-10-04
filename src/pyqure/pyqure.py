@@ -7,7 +7,7 @@ T = TypeVar("T")
 @dataclass(frozen=True, eq=True)
 class Key(Generic[T]):
     name: str
-    type: type[T]
+    type: type[Any]
 
 
 PyqureMemory = dict[Key[Any], Any]
