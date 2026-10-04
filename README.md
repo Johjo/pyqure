@@ -47,11 +47,13 @@ inject(Key("greeting", str))  # "hello"
 
 ## Installation
 
+The package is not yet published on PyPI. Install from the repository:
+
 ```bash
-pip install pyqure
+pip install git+https://github.com/Johjo/pyqure.git
 ```
 
-Or from source:
+Or, for development:
 
 ```bash
 git clone https://github.com/Johjo/pyqure.git
