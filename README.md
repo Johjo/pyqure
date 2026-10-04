@@ -70,4 +70,4 @@ uv run mypy .   # type-check (strict)
 
 ## License
 
-TBD
+[MIT](LICENSE)
