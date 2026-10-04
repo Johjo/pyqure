@@ -70,4 +70,8 @@ uv run mypy .   # type-check (strict)
 
 ## License
 
-TBD
+[MIT](LICENSE)
+
+## Acknowledgments
+
+pyqure is inspired by [piqure](https://github.com/Gnuk/piqure) by Anthony Rey, a dependency injection system in JavaScript (MIT licensed).
